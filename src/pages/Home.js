@@ -33,6 +33,8 @@ import Coming_bitmap3 from "../../assets/coming_bitmap3.png";
 //* components
 import Bottombar from "../components/bottombar";
 
+const WIDTH = Dimensions.get("window").width;
+
 const RECOMMEND_CARDS = [
     {
         date: "FRIDAY AUG 24, 9PM",
@@ -174,7 +176,7 @@ export default function Home() {
     const [loaded, error] = useFonts({
         "Work-Sans-Bold": require("../../assets/fonts/WorkSans-Bold.ttf"),
         "Work-Sans-SemiBold": require("../../assets/fonts/WorkSans-SemiBold.ttf"),
-        "Nunito-ExtraBold": require('../../assets/fonts/Nunito-ExtraBold.ttf')
+        "Nunito-ExtraBold": require("../../assets/fonts/Nunito-ExtraBold.ttf"),
     });
 
     useEffect(() => {
@@ -186,58 +188,80 @@ export default function Home() {
 
     const recommended_slide = ({ item, index }) => {
         return (
-            <TouchableOpacity style={recommended.card}>
+            <View style={recommended.card}>
                 <Image source={item.image} style={recommended.cardImage} />
                 <TouchableOpacity style={recommended.exit}>
                     <View style={recommended.exitIcon}>
                         <Image source={Exit} style={recommended.exitImage} />
                     </View>
                 </TouchableOpacity>
-                <Text style={recommended.cardDate}>{item.date}</Text>
-                <Text style={recommended.cardTitle}>{item.title}</Text>
-                <View style={recommended.cardDescription}>
-                    <View style={recommended.song}>
-                        <Image
-                            source={Song}
-                            style={recommended.descriptionIcon}
-                        />
-                        <Text style={recommended.description}>{item.type}</Text>
+                <TouchableOpacity>
+                    <Text style={recommended.cardDate}>{item.date}</Text>
+                    <Text style={recommended.cardTitle}>{item.title}</Text>
+                    <View style={recommended.cardDescription}>
+                        <View style={recommended.song}>
+                            <Image
+                                source={Song}
+                                style={recommended.descriptionIcon}
+                            />
+                            <Text style={recommended.description}>
+                                {item.type}
+                            </Text>
+                        </View>
+                        <View style={recommended.ticket}>
+                            <Image
+                                source={Ticket}
+                                style={recommended.descriptionIcon}
+                            />
+                            <Text style={recommended.description}>
+                                {item.price}
+                            </Text>
+                        </View>
                     </View>
-                    <View style={recommended.ticket}>
-                        <Image
-                            source={Ticket}
-                            style={recommended.descriptionIcon}
-                        />
-                        <Text style={recommended.description}>
-                            {item.price}
-                        </Text>
-                    </View>
-                </View>
-            </TouchableOpacity>
+                </TouchableOpacity>
+            </View>
         );
     };
 
     const collections_slide = ({ item, index }) => {
         return (
             <TouchableOpacity style={collections.card}>
-                <Image source={item.image} style={collections.cardImage} />
-                <Text style={collections.cardTitle}>{item.title}</Text>
-                <View style={collections.description}>
-                    <Image source={Song} style={collections.descriptionIcon} />
-                    <Text style={collections.descriptionText}>{item.type}</Text>
+                <View>
+                    <Image source={item.image} style={collections.cardImage} />
+                    <Text style={collections.cardTitle}>{item.title}</Text>
+                    <View style={collections.description}>
+                        <Image
+                            source={Song}
+                            style={collections.descriptionIcon}
+                        />
+                        <Text style={collections.descriptionText}>
+                            {item.type}
+                        </Text>
+                    </View>
                 </View>
-                <TouchableOpacity style={collections.more}>
-                    <Text style={collections.moreText}>Learn more</Text>
-                    <Image source={More} style={collections.moreIcon} />
-                </TouchableOpacity>
+                <View>
+                    <TouchableOpacity style={collections.more}>
+                        <Text style={collections.moreText}>Learn more</Text>
+                        <Image source={More} style={collections.moreIcon} />
+                    </TouchableOpacity>
+                </View>
             </TouchableOpacity>
         );
     };
 
     const coming_events = comingCards.map((item, index) => {
         const more = comingCards[index].events.length - 1;
+        let last = false;
+        if (comingCards.length === index + 1) {
+            last = true;
+        }
         return (
-            <View key={index} style={coming.event}>
+            <View
+                key={index}
+                style={
+                    last ? [coming.event, { marginBottom: "30%" }] : coming.event
+                }
+            >
                 <View style={coming.day}>
                     <View style={coming.date}>
                         <Text style={coming.dateDay}>{item.date}</Text>
@@ -311,7 +335,7 @@ export default function Home() {
                             data={recommend}
                             renderItem={recommended_slide}
                             sliderWidth={Dimensions.get("window").width}
-                            itemWidth={Dimensions.get("window").width - 60}
+                            itemWidth={Dimensions.get("window").width * 0.84}
                             hasParallaxImages={true}
                         />
                     </View>
@@ -324,7 +348,7 @@ export default function Home() {
                             data={collectionCards}
                             renderItem={collections_slide}
                             sliderWidth={Dimensions.get("window").width}
-                            itemWidth={Dimensions.get("window").width - 60}
+                            itemWidth={Dimensions.get("window").width * 0.84}
                             hasParallaxImages={true}
                         />
                     </View>
@@ -395,7 +419,7 @@ export default function Home() {
                         </View>
                     </View>
                 </ScrollView>
-                <View style={{ marginBottom: 70 }} />
+                <View style={{ marginBottom: "20%" }} />
                 <Bottombar />
             </>
         );
@@ -407,11 +431,11 @@ const styles = StyleSheet.create({
     header: {
         display: "flex",
         justifyContent: "center",
-        height: 92,
+        height: "9%",
         backgroundColor: "#FFF",
     },
     logo: {
-        marginTop: 24,
+        marginTop: "5%",
         textAlign: "center",
         lineHeight: 28,
         fontSize: 22,
@@ -422,11 +446,11 @@ const styles = StyleSheet.create({
 //* recommended section
 const recommended = StyleSheet.create({
     index: {
-        marginTop: 35,
+        marginTop: "8%",
         flexDirection: "column",
     },
     header: {
-        marginHorizontal: 16,
+        marginHorizontal: "5%",
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between",
@@ -439,46 +463,46 @@ const recommended = StyleSheet.create({
     },
     filter: {
         backgroundColor: "#FFF",
-        width: 32,
-        height: 32,
+        width: "8%",
+        height: WIDTH * 0.07,
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
         borderRadius: 90,
     },
     image: {
-        height: 21,
-        width: 21,
+        height: WIDTH * 0.05,
+        width: WIDTH * 0.05,
     },
     card: {
         marginTop: 29,
-        height: 256,
+        height: "21%",
     },
     cardImage: {
         position: "absolute",
-        width: 327,
-        height: 256,
+        width: "100%",
+        height: "400%",
         borderRadius: 16,
     },
     cardDate: {
         color: "#FFF",
-        marginTop: 144,
-        marginLeft: 16,
-        marginBottom: 5,
+        marginTop: 140,
+        marginLeft: "5%",
+        marginBottom: "2%",
         fontSize: 14,
         lineHeight: 16,
         fontFamily: "Work-Sans-SemiBold",
     },
     cardTitle: {
         color: "#FFF",
-        marginLeft: 16,
+        marginLeft: "5%",
         fontSize: 26,
         lineHeight: 24,
         fontFamily: "Work-Sans-SemiBold",
     },
     cardDescription: {
         flexDirection: "row",
-        marginLeft: 16,
+        marginLeft: "5%",
     },
     description: {
         color: "#FFF",
@@ -490,7 +514,7 @@ const recommended = StyleSheet.create({
         alignItems: "center",
     },
     ticket: {
-        marginLeft: 10,
+        marginLeft: "2%",
         flexDirection: "row",
         alignItems: "center",
     },
@@ -501,8 +525,8 @@ const recommended = StyleSheet.create({
     },
     exit: {
         alignItems: "flex-end",
-        marginTop: 5,
-        marginRight: 10,
+        marginTop: "1%",
+        marginRight: "1%",
     },
     exitIcon: {
         width: 30,
@@ -521,11 +545,11 @@ const recommended = StyleSheet.create({
 
 const collections = StyleSheet.create({
     index: {
-        marginTop: 45,
+        marginTop: "8%",
         flexDirection: "column",
     },
     header: {
-        marginHorizontal: 16,
+        marginHorizontal: "5%",
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between",
@@ -538,29 +562,29 @@ const collections = StyleSheet.create({
     },
     card: {
         marginTop: 29,
-        height: 161,
+        height: "12%",
     },
     cardImage: {
         position: "absolute",
-        width: 319,
-        height: 161,
+        width: "100%",
+        height: "200%",
         borderRadius: 16,
     },
     cardTitle: {
         color: "#FFF",
-        marginTop: 18,
-        marginLeft: 16,
+        marginTop: "5%",
+        marginLeft: "5%",
         fontSize: 26,
         lineHeight: 24,
         fontFamily: "Work-Sans-SemiBold",
     },
     description: {
-        marginLeft: 16,
+        marginLeft: "5%",
         flexDirection: "row",
         alignItems: "center",
     },
     descriptionIcon: {
-        marginRight: 5,
+        marginRight: "1%",
         width: 10,
         height: 10,
         tintColor: "#BDC0C4",
@@ -571,8 +595,8 @@ const collections = StyleSheet.create({
         fontFamily: "Work-Sans-SemiBold",
     },
     more: {
-        marginTop: 75,
-        marginLeft: 16,
+        marginTop: "8%",
+        marginLeft: "5%",
         flexDirection: "row",
         alignItems: "center",
     },
@@ -582,7 +606,7 @@ const collections = StyleSheet.create({
         fontFamily: "Work-Sans-SemiBold",
     },
     moreIcon: {
-        marginTop: 2,
+        marginTop: "0.5%",
         marginLeft: 5,
         width: 6,
         height: 6,
@@ -591,11 +615,10 @@ const collections = StyleSheet.create({
 
 const discover = StyleSheet.create({
     index: {
-        marginTop: 45,
         flexDirection: "column",
     },
     header: {
-        marginHorizontal: 16,
+        marginHorizontal: "5%",
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between",
@@ -607,13 +630,13 @@ const discover = StyleSheet.create({
         color: "#373A42",
     },
     card: {
-        width: 145,
+        width: "85%",
         height: 56,
         marginTop: 20,
         backgroundColor: "#FFF",
         flexDirection: "row",
         alignItems: "center",
-        marginHorizontal: 10,
+        marginHorizontal: 25,
         borderRadius: 90,
     },
     icon: {
@@ -637,11 +660,11 @@ const discover = StyleSheet.create({
 
 const coming = StyleSheet.create({
     index: {
-        marginTop: 45,
+        marginTop: "8%",
         flexDirection: "column",
     },
     header: {
-        marginHorizontal: 16,
+        marginHorizontal: "5%",
         flexDirection: "column",
     },
     location: {
@@ -684,28 +707,28 @@ const coming = StyleSheet.create({
     },
     eventMonth: {
         flexDirection: "column",
-        marginTop: 16,
+        marginTop: "5%",
     },
     eventMonthText: {
-        marginLeft: 22,
+        marginLeft: "10%",
         fontFamily: "Work-Sans-Bold",
         fontSize: 14,
         color: "#FC1055",
         textTransform: "uppercase",
-        marginBottom: 5,
+        marginBottom: "2%",
     },
     event: {
         flexDirection: "row",
-        justifyContent: "space-around",
         marginBottom: 30,
     },
     day: {
         flexDirection: "column",
         alignItems: "center",
-        width: 40,
-        height: 56,
+        width: "10%",
+        height: WIDTH * 0.15,
         backgroundColor: "#FFF",
         borderRadius: 12,
+        marginLeft: "7.5%",
     },
     date: {
         justifyContent: "center",
@@ -713,7 +736,7 @@ const coming = StyleSheet.create({
     dateDay: {
         fontSize: 20,
         fontFamily: "Work-Sans-SemiBold",
-        marginTop: 8,
+        marginTop: "30%",
         textAlign: "center",
     },
     dateWeek: {
@@ -723,25 +746,27 @@ const coming = StyleSheet.create({
         textTransform: "uppercase",
     },
     eventMainCard: {
-        width: 287,
-        height: 172,
+        width: "100%",
+        height: 200,
+        marginLeft: "10%",
+        marginRight: "5%",
     },
     eventMainImage: {
         position: "absolute",
-        width: 287,
-        height: 172,
+        width: "100%",
+        height: "100%",
         borderRadius: 16,
     },
     eventTitle: {
         color: "#FFF",
         marginTop: 120,
-        marginLeft: 20,
+        marginLeft: "6%",
         fontSize: 20,
         fontFamily: "Work-Sans-SemiBold",
     },
     eventDescription: {
         flexDirection: "row",
-        marginLeft: 20,
+        marginLeft: "6%",
         alignItems: "center",
     },
     descriptionIcon: {
@@ -750,26 +775,27 @@ const coming = StyleSheet.create({
     },
     descriptionType: {
         color: "#FFF",
-        marginLeft: 5,
+        marginLeft: "1%",
         fontSize: 12,
         fontFamily: "Work-Sans-SemiBold",
         marginRight: 10,
     },
     descriptionPrice: {
         color: "#FFF",
-        marginLeft: 5,
+        marginLeft: "1%",
         fontSize: 12,
         fontFamily: "Work-Sans-SemiBold",
     },
     eventSubCard: {
-        marginTop: 10,
-        width: 287,
+        marginTop: "3%",
+        marginLeft: "10%",
+        width: "100%",
         height: 40,
     },
     eventSubImage: {
         position: "absolute",
-        width: 287,
-        height: 40,
+        width: "100%",
+        height: "100%",
         borderRadius: 10,
     },
     eventMore: {
@@ -777,13 +803,13 @@ const coming = StyleSheet.create({
         justifyContent: "space-between",
         alignItems: "center",
         marginTop: 10,
-        marginHorizontal: 15
+        marginHorizontal: 15,
     },
     eventMoreText: {
         color: "#FFF",
         fontSize: 15,
         fontFamily: "Nunito-ExtraBold",
-        textTransform: "uppercase"
+        textTransform: "uppercase",
     },
     eventMoreIcon: {
         width: 10,

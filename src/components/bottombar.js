@@ -28,7 +28,7 @@ export default function bottombar() {
 
     function handleHome() {
         if (Home === HomeActive) return;
-        
+
         setHome(HomeActive);
         setSearch(SearchInactive);
         setTicket(TicketInactive);
@@ -37,7 +37,7 @@ export default function bottombar() {
 
     function handleSearch() {
         if (Search === SearchActive) return;
-        
+
         setHome(HomeInactive);
         setSearch(SearchActive);
         setTicket(TicketInactive);
@@ -46,7 +46,7 @@ export default function bottombar() {
 
     function handleTicket() {
         if (Ticket === TicketActive) return;
-        
+
         setHome(HomeInactive);
         setSearch(SearchInactive);
         setTicket(TicketActive);
@@ -55,7 +55,7 @@ export default function bottombar() {
 
     function handleProfile() {
         if (Profile === ProfileActive) return;
-        
+
         setHome(HomeInactive);
         setSearch(SearchInactive);
         setTicket(TicketInactive);
@@ -69,7 +69,7 @@ export default function bottombar() {
                     <TouchableOpacity onPress={handleHome}>
                         <Image source={Home} style={styles.icons} />
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={handleSearch }>
+                    <TouchableOpacity onPress={handleSearch}>
                         <Image source={Search} style={styles.icons} />
                     </TouchableOpacity>
                     <TouchableOpacity onPress={handleTicket}>
@@ -87,15 +87,15 @@ export default function bottombar() {
 const styles = StyleSheet.create({
     bar: {
         position: "absolute",
-        top: MAX_HEIGHT,
+        top: "92%",
         height: 90,
         width: MAX_WIDTH,
         backgroundColor: "#FFF",
     },
     buttons: {
-        marginTop: 20,
-        marginLeft: 50,
-        width: 280,
+        marginTop: "5%",
+        marginLeft: "11%",
+        width: "75%",
         flexDirection: "row",
         justifyContent: "space-between",
     },
